@@ -8,16 +8,16 @@
 #include "ApplicationScheme.hpp"
 
 namespace ec {
-    template <class DDType, class Config>
-    class OneToOneApplicationScheme final
-        : public ApplicationScheme<DDType, Config> {
-    public:
-        OneToOneApplicationScheme(TaskManager<DDType, Config>& tm1,
-                                  TaskManager<DDType, Config>& tm2) noexcept
-            : ApplicationScheme<DDType, Config>(tm1, tm2) {}
+template <class DDType, class Config>
+class OneToOneApplicationScheme final
+    : public ApplicationScheme<DDType, Config> {
+public:
+    OneToOneApplicationScheme(TaskManager<DDType, Config>& tm1,
+                              TaskManager<DDType, Config>& tm2) noexcept
+        : ApplicationScheme<DDType, Config>(tm1, tm2) {}
 
-        std::pair<size_t, size_t> operator()() noexcept override {
-            return {1U, 1U};
-        }
-    };
+    std::pair<size_t, size_t> operator()() noexcept override {
+        return {1U, 1U};
+    }
+};
 } // namespace ec

@@ -13,44 +13,44 @@
 #include <utility>
 
 namespace ec {
-    class EquivalenceChecker {
-    public:
-        EquivalenceChecker(const qc::QuantumComputation& circ1,
-                           const qc::QuantumComputation& circ2,
-                           Configuration                 config) noexcept
-            : qc1(circ1), qc2(circ2),
-              nqubits(std::max(qc1.getNqubits(), qc2.getNqubits())),
-              configuration(std::move(config)){};
+class EquivalenceChecker {
+public:
+    EquivalenceChecker(const qc::QuantumComputation& circ1,
+                       const qc::QuantumComputation& circ2,
+                       Configuration                 config) noexcept
+        : qc1(circ1), qc2(circ2),
+          nqubits(std::max(qc1.getNqubits(), qc2.getNqubits())),
+          configuration(std::move(config)){};
 
-        virtual ~EquivalenceChecker() = default;
+    virtual ~EquivalenceChecker() = default;
 
-        virtual EquivalenceCriterion run() = 0;
+    virtual EquivalenceCriterion run() = 0;
 
-        [[nodiscard]] EquivalenceCriterion getEquivalence() const noexcept {
-            return equivalence;
-        }
-        [[nodiscard]] double getRuntime() const noexcept { return runtime; }
+    [[nodiscard]] EquivalenceCriterion getEquivalence() const noexcept {
+        return equivalence;
+    }
+    [[nodiscard]] double getRuntime() const noexcept { return runtime; }
 
-        virtual void json(nlohmann::json& j) const noexcept;
+    virtual void json(nlohmann::json& j) const noexcept;
 
-        void signalDone() { done.store(true, std::memory_order_relaxed); }
-        [[nodiscard]] auto isDone() const {
-            return done.load(std::memory_order_relaxed);
-        }
+    void signalDone() { done.store(true, std::memory_order_relaxed); }
+    [[nodiscard]] auto isDone() const {
+        return done.load(std::memory_order_relaxed);
+    }
 
-    protected:
-        const qc::QuantumComputation& qc1;
-        const qc::QuantumComputation& qc2;
+protected:
+    const qc::QuantumComputation& qc1;
+    const qc::QuantumComputation& qc2;
 
-        std::size_t nqubits{};
+    std::size_t nqubits{};
 
-        Configuration configuration;
+    Configuration configuration;
 
-        EquivalenceCriterion equivalence = EquivalenceCriterion::NoInformation;
-        double               runtime{};
+    EquivalenceCriterion equivalence = EquivalenceCriterion::NoInformation;
+    double               runtime{};
 
-    private:
-        std::atomic<bool> done{false};
-    };
+private:
+    std::atomic<bool> done{false};
+};
 
 } // namespace ec
