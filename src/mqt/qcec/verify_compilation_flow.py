@@ -46,12 +46,12 @@ def __check_if_circuit_contains_measurements(circuit: QuantumCircuit) -> None:
 
 
 def verify_compilation(
-    original_circuit: QuantumCircuit | str,
-    compiled_circuit: QuantumCircuit | str,
-    optimization_level: int = 1,
-    ancilla_mode: AncillaMode = AncillaMode.NO_ANCILLA,
-    configuration: Configuration | None = None,
-    **kwargs: Unpack[ConfigurationOptions],
+        original_circuit: QuantumCircuit | str,
+        compiled_circuit: QuantumCircuit | str,
+        optimization_level: int = 1,
+        ancilla_mode: AncillaMode = AncillaMode.NO_ANCILLA,
+        configuration: Configuration | None = None,
+        **kwargs: Unpack[ConfigurationOptions],
 ) -> EquivalenceCheckingManager.Results:
     """Verify compilation flow results.
 

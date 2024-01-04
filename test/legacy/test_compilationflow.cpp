@@ -10,27 +10,28 @@
 #include <string>
 
 class CompilationFlowTest : public testing::TestWithParam<std::string> {
-protected:
-  qc::QuantumComputation qcOriginal;
-  qc::QuantumComputation qcTranspiled;
+  protected:
+    qc::QuantumComputation qcOriginal;
+    qc::QuantumComputation qcTranspiled;
 
-  std::string testOriginalDir   = "./circuits/original/";
-  std::string testTranspiledDir = "./circuits/transpiled/";
+    std::string testOriginalDir   = "./circuits/original/";
+    std::string testTranspiledDir = "./circuits/transpiled/";
 
-  ec::Configuration configuration{};
+    ec::Configuration configuration{};
 
-  void SetUp() override {
-    qcOriginal.import(testOriginalDir + GetParam() + ".real");
-    qcTranspiled.import(testTranspiledDir + GetParam() + "_transpiled.qasm");
+    void SetUp() override {
+        qcOriginal.import(testOriginalDir + GetParam() + ".real");
+        qcTranspiled.import(testTranspiledDir + GetParam() +
+                            "_transpiled.qasm");
 
-    configuration.execution.runAlternatingChecker  = true;
-    configuration.execution.runConstructionChecker = false;
-    configuration.execution.runSimulationChecker   = false;
+        configuration.execution.runAlternatingChecker  = true;
+        configuration.execution.runConstructionChecker = false;
+        configuration.execution.runSimulationChecker   = false;
 
-    configuration.application.alternatingScheme =
-        ec::ApplicationSchemeType::GateCost;
-    configuration.application.costFunction = ec::legacyCostFunction;
-  }
+        configuration.application.alternatingScheme =
+            ec::ApplicationSchemeType::GateCost;
+        configuration.application.costFunction = ec::legacyCostFunction;
+    }
 };
 
 INSTANTIATE_TEST_SUITE_P(
@@ -41,24 +42,24 @@ INSTANTIATE_TEST_SUITE_P(
                     "cm163a_213", "c2_182", "sym9_317", "mod5adder_306",
                     "rd84_313", "cm151a_211", "apla_203"),
     [](const testing::TestParamInfo<CompilationFlowTest::ParamType>& inf) {
-      auto s = inf.param;
-      std::replace(s.begin(), s.end(), '-', '_');
-      return s;
+        auto s = inf.param;
+        std::replace(s.begin(), s.end(), '-', '_');
+        return s;
     });
 
 TEST_P(CompilationFlowTest, EquivalenceCompilationFlow) {
-  ec::EquivalenceCheckingManager ecm(qcOriginal, qcTranspiled, configuration);
-  ecm.run();
-  std::cout << ecm.toString() << std::endl;
-  EXPECT_TRUE(ecm.getResults().consideredEquivalent());
+    ec::EquivalenceCheckingManager ecm(qcOriginal, qcTranspiled, configuration);
+    ecm.run();
+    std::cout << ecm.toString() << std::endl;
+    EXPECT_TRUE(ecm.getResults().consideredEquivalent());
 }
 
 TEST_P(CompilationFlowTest, EquivalenceCompilationFlowParallel) {
-  configuration.execution.runSimulationChecker = true;
-  configuration.execution.parallel             = true;
+    configuration.execution.runSimulationChecker = true;
+    configuration.execution.parallel             = true;
 
-  ec::EquivalenceCheckingManager ecm(qcOriginal, qcTranspiled, configuration);
-  ecm.run();
-  std::cout << ecm.toString() << std::endl;
-  EXPECT_TRUE(ecm.getResults().consideredEquivalent());
+    ec::EquivalenceCheckingManager ecm(qcOriginal, qcTranspiled, configuration);
+    ecm.run();
+    std::cout << ecm.toString() << std::endl;
+    EXPECT_TRUE(ecm.getResults().consideredEquivalent());
 }

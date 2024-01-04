@@ -1,7 +1,7 @@
-if(NOT SKBUILD)
-  message(
-    NOTICE
-    "\
+if (NOT SKBUILD)
+    message(
+            NOTICE
+            "\
   This CMake file is meant to be executed using 'scikit-build'. Running
   it directly will almost certainly not produce the desired result. If
   you are a user trying to install this package, please use the command
@@ -21,16 +21,16 @@ if(NOT SKBUILD)
   You may optionally add -Ceditable.rebuild=true to auto-rebuild when
   the package is imported. Otherwise, you need to re-run the above
   after editing C++ files.")
-endif()
+endif ()
 
-if(NOT SKBUILD)
-  # Manually detect the installed pybind11 package and import it into CMake.
-  execute_process(
-    COMMAND "${Python_EXECUTABLE}" -m pybind11 --cmakedir
-    OUTPUT_STRIP_TRAILING_WHITESPACE
-    OUTPUT_VARIABLE pybind11_DIR)
-  list(APPEND CMAKE_PREFIX_PATH "${pybind11_DIR}")
-endif()
+if (NOT SKBUILD)
+    # Manually detect the installed pybind11 package and import it into CMake.
+    execute_process(
+            COMMAND "${Python_EXECUTABLE}" -m pybind11 --cmakedir
+            OUTPUT_STRIP_TRAILING_WHITESPACE
+            OUTPUT_VARIABLE pybind11_DIR)
+    list(APPEND CMAKE_PREFIX_PATH "${pybind11_DIR}")
+endif ()
 
 # Import pybind11 through CMake's find_package mechanism
 find_package(pybind11 CONFIG REQUIRED)

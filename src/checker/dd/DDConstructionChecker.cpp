@@ -9,6 +9,6 @@
 // virtual method definition which avoids emitting the classe's vtable in
 // every translation unit.
 void ec::DDConstructionChecker::json(nlohmann::json& j) const noexcept {
-  DDEquivalenceChecker::json(j);
-  j["checker"] = "decision_diagram_construction";
+    DDEquivalenceChecker::json(j);
+    j["checker"] = "decision_diagram_construction";
 }

@@ -16,10 +16,10 @@ from .parameterized import __is_parameterized, check_parameterized
 
 
 def verify(
-    circ1: QuantumCircuit | str,
-    circ2: QuantumCircuit | str,
-    configuration: Configuration | None = None,
-    **kwargs: Unpack[ConfigurationOptions],
+        circ1: QuantumCircuit | str,
+        circ2: QuantumCircuit | str,
+        configuration: Configuration | None = None,
+        **kwargs: Unpack[ConfigurationOptions],
 ) -> EquivalenceCheckingManager.Results:
     """Verify that ``circ1`` and ``circ2`` are equivalent.
 

@@ -30,7 +30,7 @@ def __adjust_timeout(curr_timeout: float, res: EquivalenceCheckingManager.Result
 
 
 def check_parameterized_zx(
-    circ1: QuantumCircuit | str, circ2: QuantumCircuit | str, configuration: Configuration
+        circ1: QuantumCircuit | str, circ2: QuantumCircuit | str, configuration: Configuration
 ) -> EquivalenceCheckingManager.Results:
     """Check circuits for equivalence with the ZX-calculus."""
     ecm = EquivalenceCheckingManager(circ1, circ2, configuration)
@@ -43,7 +43,7 @@ def check_parameterized_zx(
 
 
 def extract_params(
-    circ1: QuantumCircuit, circ2: QuantumCircuit
+        circ1: QuantumCircuit, circ2: QuantumCircuit
 ) -> tuple[list[Parameter], NDArray[np.float64], NDArray[np.float64]]:
     """Extract parameters and equations of parameterized circuits."""
     p1 = set(circ1.parameters)
@@ -80,7 +80,7 @@ def extract_params(
 
 
 def check_instantiated(
-    circ1: QuantumCircuit, circ2: QuantumCircuit, configuration: Configuration
+        circ1: QuantumCircuit, circ2: QuantumCircuit, configuration: Configuration
 ) -> EquivalenceCheckingManager.Results:
     """Check circuits for equivalence with DD equivalence checker."""
     ecm = EquivalenceCheckingManager(circ1, circ2, configuration)
@@ -92,7 +92,7 @@ def check_instantiated(
 
 
 def check_instantiated_random(
-    circ1: QuantumCircuit, circ2: QuantumCircuit, params: list[Parameter], configuration: Configuration
+        circ1: QuantumCircuit, circ2: QuantumCircuit, params: list[Parameter], configuration: Configuration
 ) -> EquivalenceCheckingManager.Results:
     """Check whether circuits are equivalent for random instantiation of symbolic parameters."""
     param_map = {}
@@ -107,7 +107,7 @@ def check_instantiated_random(
 
 
 def check_parameterized(
-    circ1: QuantumCircuit | str, circ2: QuantumCircuit | str, configuration: Configuration
+        circ1: QuantumCircuit | str, circ2: QuantumCircuit | str, configuration: Configuration
 ) -> EquivalenceCheckingManager.Results:
     """Equivalence checking flow for parameterized circuit."""
     total_preprocessing_time = 0.0
@@ -150,7 +150,7 @@ def check_parameterized(
     parameters, mat, offsets = extract_params(circ1, circ2)
 
     def instantiate_params(
-        qc1: QuantumCircuit, qc2: QuantumCircuit, b: NDArray[np.float64]
+            qc1: QuantumCircuit, qc2: QuantumCircuit, b: NDArray[np.float64]
     ) -> tuple[QuantumCircuit, QuantumCircuit, float]:
         start_time = time.time()
         mat_pinv = np.linalg.pinv(mat)
@@ -172,12 +172,12 @@ def check_parameterized(
         return qc1_bound, qc2_bound, time.time() - start_time
 
     def instantiate_params_zero(
-        qc1: QuantumCircuit, qc2: QuantumCircuit
+            qc1: QuantumCircuit, qc2: QuantumCircuit
     ) -> tuple[QuantumCircuit, QuantumCircuit, float]:
         return instantiate_params(qc1, qc2, offsets)
 
     def instantiate_params_phases(
-        qc1: QuantumCircuit, qc2: QuantumCircuit
+            qc1: QuantumCircuit, qc2: QuantumCircuit
     ) -> tuple[QuantumCircuit, QuantumCircuit, float]:
         phases = [0, np.pi, np.pi / 2, -np.pi / 2, np.pi / 4, -np.pi / 4]
         rng = np.random.default_rng()

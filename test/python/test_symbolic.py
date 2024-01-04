@@ -132,7 +132,7 @@ def test_non_equivalent_rz_commute(rz_commute_lhs: QuantumCircuit, rz_commute_rh
 
 
 def test_non_equivalent_phase_rz_commute(
-    rz_commute_lhs: QuantumCircuit, rz_commute_rhs_incorrect: QuantumCircuit
+        rz_commute_lhs: QuantumCircuit, rz_commute_rhs_incorrect: QuantumCircuit
 ) -> None:
     """Test an invalid RZ commutation rule with additional instantiations.."""
     result = qcec.verify(rz_commute_lhs, rz_commute_rhs_incorrect, additional_instantiations=2, timeout=3600)
@@ -140,7 +140,7 @@ def test_non_equivalent_phase_rz_commute(
 
 
 def test_equivalent_roation_gate_fuse(
-    rotation_gate_fuse_lhs: QuantumCircuit, rotation_gate_fuse_rhs_correct: QuantumCircuit
+        rotation_gate_fuse_lhs: QuantumCircuit, rotation_gate_fuse_rhs_correct: QuantumCircuit
 ) -> None:
     """Test a rotation gate fusion rule."""
     result = qcec.verify(rotation_gate_fuse_lhs, rotation_gate_fuse_rhs_correct)
@@ -148,7 +148,7 @@ def test_equivalent_roation_gate_fuse(
 
 
 def test_non_equivalent_roation_gate_fuse(
-    rotation_gate_fuse_lhs: QuantumCircuit, rotation_gate_fuse_rhs_incorrect: QuantumCircuit
+        rotation_gate_fuse_lhs: QuantumCircuit, rotation_gate_fuse_rhs_incorrect: QuantumCircuit
 ) -> None:
     """Test an invalid rotation gate fusion rule."""
     result = qcec.verify(rotation_gate_fuse_lhs, rotation_gate_fuse_rhs_incorrect)
@@ -156,7 +156,7 @@ def test_non_equivalent_roation_gate_fuse(
 
 
 def test_almost_zero_non_equ(
-    rotation_gate_fuse_lhs: QuantumCircuit, rotation_gate_fuse_rhs_approximate: QuantumCircuit
+        rotation_gate_fuse_lhs: QuantumCircuit, rotation_gate_fuse_rhs_approximate: QuantumCircuit
 ) -> None:
     """Test an invalid rotation gate fusion rule with some small deviation."""
     result = qcec.verify(rotation_gate_fuse_lhs, rotation_gate_fuse_rhs_approximate)
@@ -164,7 +164,7 @@ def test_almost_zero_non_equ(
 
 
 def test_almost_zero_non_equ_random(
-    rotation_gate_fuse_lhs: QuantumCircuit, rotation_gate_fuse_rhs_approximate: QuantumCircuit
+        rotation_gate_fuse_lhs: QuantumCircuit, rotation_gate_fuse_rhs_approximate: QuantumCircuit
 ) -> None:
     """Test an invalid rotation gate fusion rule with some small deviation."""
     result = qcec.verify(rotation_gate_fuse_lhs, rotation_gate_fuse_rhs_approximate, parameterized_tolerance=1e-9)
@@ -196,7 +196,7 @@ def test_verify_compilation_on_optimization_levels(original_circuit: QuantumCirc
 
 @pytest.mark.parametrize("optimization_level", [0, 1, 2, 3])
 def test_verify_compilation_on_optimization_levels_config(
-    original_circuit: QuantumCircuit, optimization_level: int
+        original_circuit: QuantumCircuit, optimization_level: int
 ) -> None:
     """Test the verification of the compilation of a circuit to the 5-qubit IBMQ Athens architecture with various optimization levels."""
     config = qcec.Configuration()

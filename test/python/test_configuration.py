@@ -26,7 +26,7 @@ from mqt import qcec
     ],
 )
 def test_application_scheme(
-    application_scheme_string: ApplicationSchemeName, application_scheme_enum: qcec.ApplicationScheme
+        application_scheme_string: ApplicationSchemeName, application_scheme_enum: qcec.ApplicationScheme
 ) -> None:
     """Test the application scheme enum."""
     assert qcec.ApplicationScheme(application_scheme_string) == application_scheme_enum

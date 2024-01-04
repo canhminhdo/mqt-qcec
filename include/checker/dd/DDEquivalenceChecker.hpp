@@ -16,49 +16,50 @@
 #include <utility>
 
 namespace ec {
-template <class DDType, class Config>
-class DDEquivalenceChecker : public EquivalenceChecker {
-public:
-  DDEquivalenceChecker(const qc::QuantumComputation& circ1,
-                       const qc::QuantumComputation& circ2,
-                       Configuration                 config)
-      : EquivalenceChecker(circ1, circ2, std::move(config)),
-        dd(std::make_unique<dd::Package<Config>>(nqubits)),
-        taskManager1(TaskManager<DDType, Config>(circ1, dd)),
-        taskManager2(TaskManager<DDType, Config>(circ2, dd)) {}
+    template <class DDType, class Config>
+    class DDEquivalenceChecker : public EquivalenceChecker {
+      public:
+        DDEquivalenceChecker(const qc::QuantumComputation& circ1,
+                             const qc::QuantumComputation& circ2,
+                             Configuration                 config)
+            : EquivalenceChecker(circ1, circ2, std::move(config)),
+              dd(std::make_unique<dd::Package<Config>>(nqubits)),
+              taskManager1(TaskManager<DDType, Config>(circ1, dd)),
+              taskManager2(TaskManager<DDType, Config>(circ2, dd)) {}
 
-  EquivalenceCriterion run() override;
+        EquivalenceCriterion run() override;
 
-  void json(nlohmann::json& j) const noexcept override {
-    EquivalenceChecker::json(j);
-    j["max_nodes"] = maxActiveNodes;
-  }
+        void json(nlohmann::json& j) const noexcept override {
+            EquivalenceChecker::json(j);
+            j["max_nodes"] = maxActiveNodes;
+        }
 
-protected:
-  using DDPackage = typename dd::Package<Config>;
+      protected:
+        using DDPackage = typename dd::Package<Config>;
 
-  std::unique_ptr<DDPackage> dd;
+        std::unique_ptr<DDPackage> dd;
 
-  TaskManager<DDType, Config> taskManager1;
-  TaskManager<DDType, Config> taskManager2;
+        TaskManager<DDType, Config> taskManager1;
+        TaskManager<DDType, Config> taskManager2;
 
-  std::unique_ptr<ApplicationScheme<DDType, Config>> applicationScheme;
+        std::unique_ptr<ApplicationScheme<DDType, Config>> applicationScheme;
 
-  std::size_t maxActiveNodes{};
+        std::size_t maxActiveNodes{};
 
-  void initializeApplicationScheme(ApplicationSchemeType scheme);
+        void initializeApplicationScheme(ApplicationSchemeType scheme);
 
-  // at some point this routine should probably make its way into the DD package
-  // in some form
-  EquivalenceCriterion equals(const DDType& e, const DDType& f);
+        // at some point this routine should probably make its way into the DD
+        // package in some form
+        EquivalenceCriterion equals(const DDType& e, const DDType& f);
 
-  virtual void initializeTask(TaskManager<DDType, Config>& taskManager) = 0;
-  virtual void initialize();
-  virtual void execute();
-  virtual void finish();
-  virtual void postprocessTask(TaskManager<DDType, Config>& task);
-  virtual void postprocess();
-  virtual EquivalenceCriterion checkEquivalence();
-};
+        virtual void
+        initializeTask(TaskManager<DDType, Config>& taskManager) = 0;
+        virtual void initialize();
+        virtual void execute();
+        virtual void finish();
+        virtual void postprocessTask(TaskManager<DDType, Config>& task);
+        virtual void postprocess();
+        virtual EquivalenceCriterion checkEquivalence();
+    };
 
 } // namespace ec

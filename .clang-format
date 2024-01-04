@@ -5,3 +5,5 @@ IncludeBlocks: Regroup
 KeepEmptyLinesAtTheStartOfBlocks: false
 PointerAlignment: Left
 SpacesInContainerLiterals: false
+IndentWidth: 4
+NamespaceIndentation: All

@@ -156,12 +156,12 @@ def create_general_gate(qubits: int, params: int, controls: int, identifier: str
 
 
 def create_multi_controlled_gate(
-    qubits: int,
-    params: int,
-    controls: int,
-    mode: AncillaMode | None,
-    ancilla_qubits: int | None,
-    identifier: str,
+        qubits: int,
+        params: int,
+        controls: int,
+        mode: AncillaMode | None,
+        ancilla_qubits: int | None,
+        identifier: str,
 ) -> QuantumCircuit:
     """Create a ``QuantumCircuit`` containing a single multi-controlled gate ``identifier`` with the given number of ``qubits``, ``params``, and ``controls`` using ``ancilla_qubits`` ancilla qubits and the given ancilla ``mode``."""
     required_qubits = qubits + controls
@@ -197,9 +197,9 @@ def create_multi_controlled_gate(
 
 
 def compute_cost(
-    qc: QuantumCircuit,
-    basis_gates: list[str],
-    optimization_level: int = 1,
+        qc: QuantumCircuit,
+        basis_gates: list[str],
+        optimization_level: int = 1,
 ) -> int:
     """Compute the cost of a circuit by transpiling the circuit to a given ``basis_gates`` gate set and a certain ``optimization_level``."""
     transpiled_circuit = transpile(
@@ -217,10 +217,10 @@ class GateType(Enum):
 
 
 def create_gate_profile_data(
-    gate_collection: list[dict[str, Any]],
-    gate_type: GateType,
-    basis_gates: list[str] | None = None,
-    optimization_level: int = 1,
+        gate_collection: list[dict[str, Any]],
+        gate_type: GateType,
+        basis_gates: list[str] | None = None,
+        optimization_level: int = 1,
 ) -> dict[tuple[str, int], int]:
     """Create a dictionary of gate profile data."""
     if basis_gates is None:
@@ -261,8 +261,8 @@ def create_gate_profile_data(
 
 
 def add_special_case_data(
-    profile_data: dict[tuple[str, int], int],
-    special_cases: dict[str, Any] | None = None,
+        profile_data: dict[tuple[str, int], int],
+        special_cases: dict[str, Any] | None = None,
 ) -> None:
     """Add special case data to the profile data. This is used to extrapolate the cost of specific rotation gates (e.g., S, T, ...) from the cost of the generic phase gate."""
     if special_cases is None:
@@ -299,7 +299,7 @@ def check_recurrence(seq: list[int], order: int = 2) -> list[int] | None:
 
     mat, f = [], []
     for i in range(order):
-        mat.append(seq[i : i + order])
+        mat.append(seq[i: i + order])
         f.append(seq[i + order])
 
     if np.linalg.det(mat) == 0:
@@ -308,7 +308,7 @@ def check_recurrence(seq: list[int], order: int = 2) -> list[int] | None:
     coeffs = np.linalg.inv(mat).dot(f)
 
     for i in range(2 * order, len(seq)):
-        predict = np.sum(coeffs * np.array(seq[i - order : i]))
+        predict = np.sum(coeffs * np.array(seq[i - order: i]))
         if abs(predict - seq[i]) > 10 ** (-2):
             return None
 
@@ -316,13 +316,13 @@ def check_recurrence(seq: list[int], order: int = 2) -> list[int] | None:
 
 
 def find_continuation(
-    profile_data: dict[tuple[str, int], int],
-    gate: str,
-    cutoff: int = 5,
-    max_order: int = 3,
-    max_control: int = 11,
-    max_qubits: int = 128,
-    prediction_cutoff: float = 1e6,
+        profile_data: dict[tuple[str, int], int],
+        gate: str,
+        cutoff: int = 5,
+        max_order: int = 3,
+        max_control: int = 11,
+        max_qubits: int = 128,
+        prediction_cutoff: float = 1e6,
 ) -> None:
     """Extrapolate from the given profile data by finding recurrence relations."""
     sequence = [cost for (g, _), cost in profile_data.items() if g == gate]
@@ -362,9 +362,9 @@ default_profile_path = Path(__file__).resolve().parent.joinpath("profiles")
 
 
 def generate_profile(
-    optimization_level: int = 1,
-    mode: AncillaMode = AncillaMode.NO_ANCILLA,
-    filepath: Path | None = None,
+        optimization_level: int = 1,
+        mode: AncillaMode = AncillaMode.NO_ANCILLA,
+        filepath: Path | None = None,
 ) -> None:
     """Generate a compilation flow profile for the given optimization level and ancilla mode.
 

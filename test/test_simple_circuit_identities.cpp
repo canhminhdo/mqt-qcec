@@ -14,29 +14,29 @@
 class SimpleCircuitIdentitiesTest
     : public testing::TestWithParam<
           std::pair<std::string, std::pair<std::string, std::string>>> {
-protected:
-  qc::QuantumComputation qcOriginal;
-  qc::QuantumComputation qcAlternative;
-  ec::Configuration      config{};
+  protected:
+    qc::QuantumComputation qcOriginal;
+    qc::QuantumComputation qcAlternative;
+    ec::Configuration      config{};
 
-  std::unique_ptr<ec::EquivalenceCheckingManager> ecm{};
+    std::unique_ptr<ec::EquivalenceCheckingManager> ecm{};
 
-  void SetUp() override {
-    const auto [circ1, circ2] = GetParam().second;
-    std::stringstream ss1{circ1};
-    qcOriginal.import(ss1, qc::Format::OpenQASM);
-    std::stringstream ss2{circ2};
-    qcAlternative.import(ss2, qc::Format::OpenQASM);
+    void SetUp() override {
+        const auto [circ1, circ2] = GetParam().second;
+        std::stringstream ss1{circ1};
+        qcOriginal.import(ss1, qc::Format::OpenQASM);
+        std::stringstream ss2{circ2};
+        qcAlternative.import(ss2, qc::Format::OpenQASM);
 
-    config.optimizations.reconstructSWAPs     = false;
-    config.optimizations.fuseSingleQubitGates = false;
-    config.optimizations.reorderOperations    = false;
-    config.execution.runZXChecker             = true;
-    EXPECT_NO_THROW(ecm = std::make_unique<ec::EquivalenceCheckingManager>(
-                        qcOriginal, qcAlternative, config););
-  }
+        config.optimizations.reconstructSWAPs     = false;
+        config.optimizations.fuseSingleQubitGates = false;
+        config.optimizations.reorderOperations    = false;
+        config.execution.runZXChecker             = true;
+        EXPECT_NO_THROW(ecm = std::make_unique<ec::EquivalenceCheckingManager>(
+                            qcOriginal, qcAlternative, config););
+    }
 
-  void TearDown() override { std::cout << ecm->toString() << std::endl; }
+    void TearDown() override { std::cout << ecm->toString() << std::endl; }
 };
 
 INSTANTIATE_TEST_SUITE_P(
@@ -90,100 +90,100 @@ INSTANTIATE_TEST_SUITE_P(
                             "q[1];\n x q[0];\n"}}),
     [](const testing::TestParamInfo<SimpleCircuitIdentitiesTest::ParamType>&
            inf) {
-      std::stringstream ss{};
-      ss << inf.param.first;
-      return ss.str();
+        std::stringstream ss{};
+        ss << inf.param.first;
+        return ss.str();
     });
 
 TEST_P(SimpleCircuitIdentitiesTest, DefaultOptionsParallel) {
-  EXPECT_NO_THROW(ecm->run(););
+    EXPECT_NO_THROW(ecm->run(););
 
-  EXPECT_TRUE(ecm->getResults().consideredEquivalent());
+    EXPECT_TRUE(ecm->getResults().consideredEquivalent());
 }
 
 TEST_P(SimpleCircuitIdentitiesTest, DefaultOptionsSequential) {
-  ecm->setParallel(false);
+    ecm->setParallel(false);
 
-  EXPECT_NO_THROW(ecm->run(););
+    EXPECT_NO_THROW(ecm->run(););
 
-  EXPECT_TRUE(ecm->getResults().consideredEquivalent());
+    EXPECT_TRUE(ecm->getResults().consideredEquivalent());
 }
 
 TEST_P(SimpleCircuitIdentitiesTest, DefaultOptionsOnlySimulation) {
-  ecm->setAlternatingChecker(false);
-  ecm->setConstructionChecker(false);
-  ecm->setZXChecker(false);
+    ecm->setAlternatingChecker(false);
+    ecm->setConstructionChecker(false);
+    ecm->setZXChecker(false);
 
-  EXPECT_NO_THROW(ecm->run(););
+    EXPECT_NO_THROW(ecm->run(););
 
-  EXPECT_TRUE(ecm->getResults().consideredEquivalent());
+    EXPECT_TRUE(ecm->getResults().consideredEquivalent());
 }
 
 TEST_P(SimpleCircuitIdentitiesTest, DefaultOptionsOnlyConstruction) {
-  ecm->setAlternatingChecker(false);
-  ecm->setSimulationChecker(false);
-  ecm->setConstructionChecker(true);
-  ecm->setZXChecker(false);
+    ecm->setAlternatingChecker(false);
+    ecm->setSimulationChecker(false);
+    ecm->setConstructionChecker(true);
+    ecm->setZXChecker(false);
 
-  EXPECT_NO_THROW(ecm->run(););
+    EXPECT_NO_THROW(ecm->run(););
 
-  EXPECT_TRUE(ecm->getResults().consideredEquivalent());
+    EXPECT_TRUE(ecm->getResults().consideredEquivalent());
 }
 
 TEST_P(SimpleCircuitIdentitiesTest, DefaultOptionsOnlyZX) {
-  ecm->setAlternatingChecker(false);
-  ecm->setSimulationChecker(false);
-  ecm->setConstructionChecker(false);
-  ecm->setZXChecker(true);
+    ecm->setAlternatingChecker(false);
+    ecm->setSimulationChecker(false);
+    ecm->setConstructionChecker(false);
+    ecm->setZXChecker(true);
 
-  EXPECT_NO_THROW(ecm->run(););
-  EXPECT_TRUE(ecm->getResults().consideredEquivalent());
+    EXPECT_NO_THROW(ecm->run(););
+    EXPECT_TRUE(ecm->getResults().consideredEquivalent());
 }
 
 TEST_P(SimpleCircuitIdentitiesTest, SequentialZX) {
-  ecm->setAlternatingChecker(false);
-  ecm->setSimulationChecker(false);
-  ecm->setConstructionChecker(false);
-  ecm->setZXChecker(true);
-  ecm->setParallel(false);
+    ecm->setAlternatingChecker(false);
+    ecm->setSimulationChecker(false);
+    ecm->setConstructionChecker(false);
+    ecm->setZXChecker(true);
+    ecm->setParallel(false);
 
-  EXPECT_NO_THROW(ecm->run(););
-  EXPECT_TRUE(ecm->getResults().consideredEquivalent());
+    EXPECT_NO_THROW(ecm->run(););
+    EXPECT_TRUE(ecm->getResults().consideredEquivalent());
 }
 
 TEST_P(SimpleCircuitIdentitiesTest, GateCostApplicationScheme) {
-  ecm->setSimulationChecker(false);
-  ecm->setAlternatingApplicationScheme(ec::ApplicationSchemeType::GateCost);
-  ecm->setGateCostFunction(&ec::legacyCostFunction);
-  EXPECT_NO_THROW(ecm->run(););
+    ecm->setSimulationChecker(false);
+    ecm->setAlternatingApplicationScheme(ec::ApplicationSchemeType::GateCost);
+    ecm->setGateCostFunction(&ec::legacyCostFunction);
+    EXPECT_NO_THROW(ecm->run(););
 
-  EXPECT_TRUE(ecm->getResults().consideredEquivalent());
+    EXPECT_TRUE(ecm->getResults().consideredEquivalent());
 }
 
 TEST_P(SimpleCircuitIdentitiesTest, ReorderingOperations) {
-  ecm->reorderOperations();
-  EXPECT_NO_THROW(ecm->run(););
+    ecm->reorderOperations();
+    EXPECT_NO_THROW(ecm->run(););
 
-  EXPECT_TRUE(ecm->getResults().consideredEquivalent());
+    EXPECT_TRUE(ecm->getResults().consideredEquivalent());
 }
 
 TEST_P(SimpleCircuitIdentitiesTest, FuseSingleQubitGates) {
-  ecm->fuseSingleQubitGates();
-  EXPECT_NO_THROW(ecm->run(););
+    ecm->fuseSingleQubitGates();
+    EXPECT_NO_THROW(ecm->run(););
 
-  EXPECT_TRUE(ecm->getResults().consideredEquivalent());
+    EXPECT_TRUE(ecm->getResults().consideredEquivalent());
 }
 
 TEST_P(SimpleCircuitIdentitiesTest, ReconstructSWAPs) {
-  ecm->reconstructSWAPs();
-  EXPECT_NO_THROW(ecm->run(););
+    ecm->reconstructSWAPs();
+    EXPECT_NO_THROW(ecm->run(););
 
-  EXPECT_TRUE(ecm->getResults().consideredEquivalent());
+    EXPECT_TRUE(ecm->getResults().consideredEquivalent());
 }
 
 TEST_P(SimpleCircuitIdentitiesTest, BackpropagateOutputPermutation) {
-  ecm->backpropagateOutputPermutation();
-  EXPECT_NO_THROW(ecm->run(););
+    ecm->backpropagateOutputPermutation();
+    EXPECT_NO_THROW(ecm->run(););
 
-  EXPECT_TRUE(ecm->getResults().consideredEquivalent());
+    EXPECT_TRUE(ecm->getResults().consideredEquivalent());
 }
