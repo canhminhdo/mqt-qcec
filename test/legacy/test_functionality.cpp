@@ -10,7 +10,7 @@
 #include <string>
 
 class FunctionalityTest : public testing::TestWithParam<std::string> {
-  protected:
+protected:
     qc::QuantumComputation qcOriginal;
     qc::QuantumComputation qcAlternative;
     ec::Configuration      config{};

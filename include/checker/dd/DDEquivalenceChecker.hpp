@@ -18,7 +18,7 @@
 namespace ec {
     template <class DDType, class Config>
     class DDEquivalenceChecker : public EquivalenceChecker {
-      public:
+    public:
         DDEquivalenceChecker(const qc::QuantumComputation& circ1,
                              const qc::QuantumComputation& circ2,
                              Configuration                 config)
@@ -34,7 +34,7 @@ namespace ec {
             j["max_nodes"] = maxActiveNodes;
         }
 
-      protected:
+    protected:
         using DDPackage = typename dd::Package<Config>;
 
         std::unique_ptr<DDPackage> dd;

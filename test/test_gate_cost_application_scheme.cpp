@@ -17,7 +17,7 @@ class GateCostApplicationSchemeTest : public testing::Test {
         qc = qc::QuantumComputation(nqubits);
     }
 
-  protected:
+protected:
     std::size_t                    nqubits = 3U;
     std::unique_ptr<dd::Package<>> dd;
     qc::QuantumComputation         qc;

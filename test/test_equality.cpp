@@ -24,7 +24,7 @@ class EqualityTest : public testing::Test {
         config.execution.runZXChecker           = false;
     }
 
-  protected:
+protected:
     std::size_t            nqubits = 1U;
     qc::QuantumComputation qc1;
     qc::QuantumComputation qc2;

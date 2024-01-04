@@ -15,7 +15,7 @@ namespace ec {
     class TaskManager {
         using DDPackage = typename dd::Package<Config>;
 
-      public:
+    public:
         TaskManager(const qc::QuantumComputation& circ,
                     std::unique_ptr<DDPackage>&   dd,
                     const ec::Direction&          dir) noexcept
@@ -132,7 +132,7 @@ namespace ec {
         void decRef(DDType& state) { package->decRef(state); }
         void decRef() { decRef(internalState); }
 
-      private:
+    private:
         const qc::QuantumComputation* qc{};
         std::unique_ptr<DDPackage>&   package;
         ec::Direction                 direction = Direction::Left;

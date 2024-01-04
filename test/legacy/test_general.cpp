@@ -11,7 +11,7 @@
 #include <string>
 
 class GeneralTest : public ::testing::Test {
-  protected:
+protected:
     qc::QuantumComputation qc1;
     qc::QuantumComputation qc2;
 };

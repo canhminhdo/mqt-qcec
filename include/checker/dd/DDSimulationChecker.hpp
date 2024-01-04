@@ -11,7 +11,7 @@
 namespace ec {
     class DDSimulationChecker final
         : public DDEquivalenceChecker<qc::VectorDD, SimulationDDPackageConfig> {
-      public:
+    public:
         DDSimulationChecker(const qc::QuantumComputation& circ1,
                             const qc::QuantumComputation& circ2,
                             Configuration                 configuration);
@@ -33,7 +33,7 @@ namespace ec {
             j["checker"] = "decision_diagram_simulation";
         }
 
-      private:
+    private:
         // the initial state used for simulation. defaults to the all-zero state
         // |0...0>
         qc::VectorDD initialState{};

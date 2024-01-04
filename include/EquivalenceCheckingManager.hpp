@@ -27,7 +27,7 @@
 namespace ec {
 
     class EquivalenceCheckingManager {
-      public:
+    public:
         struct Results {
             double preprocessingTime{};
             double checkTime{};
@@ -140,8 +140,8 @@ namespace ec {
         void reorderOperations();
         void backpropagateOutputPermutation();
 
-        // Application: These settings may be changed to influence the sequence
-        // in which gates are applied during the equivalence check
+        // Application: These settings may be changed to influence the
+        // sequence in which gates are applied during the equivalence check
         void setConstructionApplicationScheme(
             const ApplicationSchemeType applicationScheme) {
             configuration.application.constructionScheme = applicationScheme;
@@ -200,8 +200,8 @@ namespace ec {
             setSimulationGateCostFunction(costFunction);
             setAlternatingGateCostFunction(costFunction);
         }
-        // Functionality: These settings may be changed to adjust options for
-        // checkers considering the whole functionality
+        // Functionality: These settings may be changed to adjust options
+        // for checkers considering the whole functionality
         void setTraceThreshold(double traceThreshold) {
             configuration.functionality.traceThreshold = traceThreshold;
         }
@@ -231,7 +231,7 @@ namespace ec {
             configuration.simulation.storeCEXoutput = store;
         }
 
-      protected:
+    protected:
         qc::QuantumComputation qc1{};
         qc::QuantumComputation qc2{};
 
@@ -248,28 +248,28 @@ namespace ec {
         Results results{};
 
         /// Given that one circuit has more qubits than the other, the
-        /// difference is assumed to arise from ancillary qubits. This function
-        /// changes the additional qubits in the larger circuit to ancillary
-        /// qubits. Furthermore it adds corresponding ancillaries in the smaller
-        /// circuit
+        /// difference is assumed to arise from ancillary qubits. This
+        /// function changes the additional qubits in the larger circuit to
+        /// ancillary qubits. Furthermore it adds corresponding ancillaries
+        /// in the smaller circuit
         void setupAncillariesAndGarbage();
 
         /// In some cases both circuits calculate the same function, but on
-        /// different qubits. This function tries to correct such mismatches.
-        /// Note that this is still highly experimental!
+        /// different qubits. This function tries to correct such
+        /// mismatches. Note that this is still highly experimental!
         void fixOutputPermutationMismatch();
 
         /// Run all configured optimization passes
         void runOptimizationPasses();
 
         /// Sequential Equivalence Check (TCAD'21)
-        /// First, a couple of simulations with various stimuli are conducted.
-        /// If any of those stimuli produce output states with a fidelity not
-        /// close to 1, the non-equivalence has been shown and the check is
-        /// finished. Given that a couple of simulations did not show any signs
-        /// of non-equivalence, the circuits are probably equivalent. To assure
-        /// this, the alternating decision diagram checker is invoked to
-        /// determine the equivalence.
+        /// First, a couple of simulations with various stimuli are
+        /// conducted. If any of those stimuli produce output states with a
+        /// fidelity not close to 1, the non-equivalence has been shown and
+        /// the check is finished. Given that a couple of simulations did
+        /// not show any signs of non-equivalence, the circuits are probably
+        /// equivalent. To assure this, the alternating decision diagram
+        /// checker is invoked to determine the equivalence.
         void checkSequential();
 
         void checkSymbolic();
@@ -279,8 +279,8 @@ namespace ec {
         /// orchestrating all configured checks in a parallel fashion
         void checkParallel();
 
-        /// Signal all checker that they shall abort the computation as soon as
-        /// possible since a result has been determined
+        /// Signal all checker that they shall abort the computation as soon
+        /// as possible since a result has been determined
         void setAndSignalDone() {
             done = true;
             for (const auto& checker : checkers) {
@@ -292,17 +292,17 @@ namespace ec {
 
         /// \brief Run an EquivalenceChecker asynchronously
         ///
-        /// This function is used to asynchronously run an EquivalenceChecker.
-        /// It also takes care of creating the checker if it does not exist yet.
-        /// Additionally, it takes care that the checker signals the main thread
-        /// when it is done (even in case of an exception).
+        /// This function is used to asynchronously run an
+        /// EquivalenceChecker. It also takes care of creating the checker
+        /// if it does not exist yet. Additionally, it takes care that the
+        /// checker signals the main thread when it is done (even in case of
+        /// an exception).
         ///
-        /// \tparam Checker The type of the checker (must be derived from the
-        /// EquivalenceChecker class).
-        /// \param id The id in the checkers vector where the checker is stored.
-        /// \param queue The queue to which the checker shall push its id
-        /// once it is done.
-        /// \return A future that can be used to wait for the checker to finish.
+        /// \tparam Checker The type of the checker (must be derived from
+        /// the EquivalenceChecker class). \param id The id in the checkers
+        /// vector where the checker is stored. \param queue The queue to
+        /// which the checker shall push its id once it is done. \return A
+        /// future that can be used to wait for the checker to finish.
         template <class Checker>
         std::future<void> asyncRunChecker(const std::size_t             id,
                                           ThreadSafeQueue<std::size_t>& queue) {

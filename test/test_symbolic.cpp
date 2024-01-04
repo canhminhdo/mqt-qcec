@@ -11,7 +11,7 @@
 using namespace qc;
 using namespace sym;
 class SymbolicTest : public ::testing::Test {
-  public:
+public:
     Variable x = Variable("x");
 
     Symbolic xMonom    = Symbolic{Term<dd::fp>{x}};

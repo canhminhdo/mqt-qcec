@@ -7,3 +7,4 @@ PointerAlignment: Left
 SpacesInContainerLiterals: false
 IndentWidth: 4
 NamespaceIndentation: All
+AccessModifierOffset: -4

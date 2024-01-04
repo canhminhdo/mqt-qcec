@@ -89,10 +89,10 @@ namespace ec {
     // application scheme describes how to proceed with the check, i.e., how
     // many operations to apply from either circuit.
     template <class DDType, class Config> class ApplicationScheme {
-      protected:
+    protected:
         using TM = TaskManager<DDType, Config>;
 
-      public:
+    public:
         ApplicationScheme(TM& tm1, TM& tm2) noexcept
             : taskManager1(tm1), taskManager2(tm2){};
 
@@ -101,7 +101,7 @@ namespace ec {
         // get how many gates from either circuit shall be applied next
         virtual std::pair<std::size_t, std::size_t> operator()() = 0;
 
-      protected:
+    protected:
         TM& taskManager1;
         TM& taskManager2;
     };

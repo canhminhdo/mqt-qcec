@@ -35,7 +35,7 @@ namespace ec {
     template <class DDType, class Config>
     class GateCostApplicationScheme final
         : public ApplicationScheme<DDType, Config> {
-      public:
+    public:
         GateCostApplicationScheme(TaskManager<DDType, Config>& tm1,
                                   TaskManager<DDType, Config>& tm2,
                                   const CostFunction&          costFunction)
@@ -67,7 +67,7 @@ namespace ec {
             return {1U, cost};
         }
 
-      private:
+    private:
         GateCostLookupTable gateCostLookupTable{};
 
         template <class CostFun>

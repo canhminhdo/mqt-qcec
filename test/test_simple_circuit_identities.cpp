@@ -14,7 +14,7 @@
 class SimpleCircuitIdentitiesTest
     : public testing::TestWithParam<
           std::pair<std::string, std::pair<std::string, std::string>>> {
-  protected:
+protected:
     qc::QuantumComputation qcOriginal;
     qc::QuantumComputation qcAlternative;
     ec::Configuration      config{};

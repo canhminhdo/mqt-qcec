@@ -14,7 +14,7 @@
 
 namespace ec {
     class EquivalenceChecker {
-      public:
+    public:
         EquivalenceChecker(const qc::QuantumComputation& circ1,
                            const qc::QuantumComputation& circ2,
                            Configuration                 config) noexcept
@@ -38,7 +38,7 @@ namespace ec {
             return done.load(std::memory_order_relaxed);
         }
 
-      protected:
+    protected:
         const qc::QuantumComputation& qc1;
         const qc::QuantumComputation& qc2;
 
@@ -49,7 +49,7 @@ namespace ec {
         EquivalenceCriterion equivalence = EquivalenceCriterion::NoInformation;
         double               runtime{};
 
-      private:
+    private:
         std::atomic<bool> done{false};
     };
 

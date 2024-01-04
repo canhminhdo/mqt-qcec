@@ -11,7 +11,7 @@ namespace ec {
     template <class DDType, class Config>
     class OneToOneApplicationScheme final
         : public ApplicationScheme<DDType, Config> {
-      public:
+    public:
         OneToOneApplicationScheme(TaskManager<DDType, Config>& tm1,
                                   TaskManager<DDType, Config>& tm2) noexcept
             : ApplicationScheme<DDType, Config>(tm1, tm2) {}

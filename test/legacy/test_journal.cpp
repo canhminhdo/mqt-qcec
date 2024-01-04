@@ -13,7 +13,7 @@
 
 class JournalTestNonEQ
     : public testing::TestWithParam<std::tuple<std::string, std::uint16_t>> {
-  protected:
+protected:
     qc::QuantumComputation qcOriginal;
     qc::QuantumComputation qcTranspiled;
     ec::Configuration      config;
@@ -247,7 +247,7 @@ TEST_P(JournalTestNonEQ, PowerOfSimulationParallel) {
 }
 
 class JournalTestEQ : public testing::TestWithParam<std::string> {
-  protected:
+protected:
     qc::QuantumComputation qcOriginal;
     qc::QuantumComputation qcTranspiled;
     ec::Configuration      config{};

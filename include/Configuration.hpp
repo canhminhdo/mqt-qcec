@@ -16,7 +16,7 @@
 namespace ec {
 
     class Configuration {
-      public:
+    public:
         // configuration options for execution
         struct Execution {
             dd::fp numericalTolerance = dd::RealNumber::eps;

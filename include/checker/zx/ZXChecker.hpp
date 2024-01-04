@@ -16,7 +16,7 @@
 
 namespace ec {
     class ZXEquivalenceChecker : public EquivalenceChecker {
-      public:
+    public:
         ZXEquivalenceChecker(const qc::QuantumComputation& circ1,
                              const qc::QuantumComputation& circ2,
                              Configuration                 config) noexcept;
@@ -28,7 +28,7 @@ namespace ec {
             j["checker"] = "zx";
         }
 
-      private:
+    private:
         zx::ZXDiagram miter;
         zx::fp        tolerance;
         bool          ancilla = false;

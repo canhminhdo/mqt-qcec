@@ -10,7 +10,7 @@
 #include <utility>
 
 class DynamicCircuitTestExactQPE : public testing::TestWithParam<std::size_t> {
-  protected:
+protected:
     std::size_t                             precision{};
     qc::fp                                  theta{};
     std::size_t                             expectedResult{};
@@ -100,7 +100,7 @@ TEST_P(DynamicCircuitTestExactQPE, UnitaryEquivalence) {
 
 class DynamicCircuitTestInexactQPE
     : public testing::TestWithParam<std::size_t> {
-  protected:
+protected:
     std::size_t precision{};
     dd::fp      theta{};
     std::size_t expectedResult{};
@@ -203,7 +203,7 @@ TEST_P(DynamicCircuitTestInexactQPE, UnitaryEquivalence) {
 }
 
 class DynamicCircuitTestBV : public testing::TestWithParam<std::size_t> {
-  protected:
+protected:
     std::size_t                             bitwidth{};
     std::unique_ptr<qc::QuantumComputation> bv;
     std::unique_ptr<qc::QuantumComputation> dbv;
@@ -254,7 +254,7 @@ TEST_P(DynamicCircuitTestBV, UnitaryEquivalence) {
 }
 
 class DynamicCircuitTestQFT : public testing::TestWithParam<std::size_t> {
-  protected:
+protected:
     std::size_t                             precision{};
     std::unique_ptr<qc::QuantumComputation> qft;
     std::unique_ptr<qc::QuantumComputation> dqft;

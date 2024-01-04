@@ -11,7 +11,7 @@ namespace ec {
     template <class DDType, class Config>
     class ProportionalApplicationScheme final
         : public ApplicationScheme<DDType, Config> {
-      public:
+    public:
         ProportionalApplicationScheme(TaskManager<DDType, Config>& tm1,
                                       TaskManager<DDType, Config>& tm2)
             : ApplicationScheme<DDType, Config>(tm1, tm2),
@@ -21,7 +21,7 @@ namespace ec {
             return {1U, gateRatio};
         }
 
-      private:
+    private:
         [[nodiscard]] std::size_t computeGateRatio() const noexcept {
             const std::size_t size1 = this->taskManager1.getCircuit()->size();
             const std::size_t size2 = this->taskManager2.getCircuit()->size();

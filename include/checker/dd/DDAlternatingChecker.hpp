@@ -13,7 +13,7 @@ namespace ec {
     class DDAlternatingChecker final
         : public DDEquivalenceChecker<qc::MatrixDD,
                                       AlternatingDDPackageConfig> {
-      public:
+    public:
         DDAlternatingChecker(const qc::QuantumComputation& circ1,
                              const qc::QuantumComputation& circ2,
                              ec::Configuration             config)
@@ -46,7 +46,7 @@ namespace ec {
         static bool canHandle(const qc::QuantumComputation& qc1,
                               const qc::QuantumComputation& qc2);
 
-      private:
+    private:
         qc::MatrixDD functionality{};
 
         void

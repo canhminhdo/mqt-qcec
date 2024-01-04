@@ -12,7 +12,7 @@
 
 namespace ec {
     template <typename T> class ThreadSafeQueue {
-      public:
+    public:
         ThreadSafeQueue() : tail(head.get()) {}
 
         ThreadSafeQueue(const ThreadSafeQueue& other) = delete;
@@ -50,7 +50,7 @@ namespace ec {
             return head.get() == getTail();
         }
 
-      private:
+    private:
         struct Node {
             std::shared_ptr<T>    data;
             std::unique_ptr<Node> next;

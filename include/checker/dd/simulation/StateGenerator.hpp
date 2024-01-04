@@ -16,7 +16,7 @@
 
 namespace ec {
     class StateGenerator {
-      public:
+    public:
         explicit StateGenerator(const std::size_t s) : seed(s) {
             seedGenerator(seed);
         }
@@ -175,7 +175,7 @@ namespace ec {
 
         void clear() { generatedComputationalBasisStates.clear(); }
 
-      private:
+    private:
         std::size_t     seed = 0U;
         std::mt19937_64 mt;
 

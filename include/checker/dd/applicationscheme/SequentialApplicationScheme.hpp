@@ -11,7 +11,7 @@ namespace ec {
     template <class DDType, class Config>
     class SequentialApplicationScheme final
         : public ApplicationScheme<DDType, Config> {
-      public:
+    public:
         SequentialApplicationScheme(TaskManager<DDType, Config>& tm1,
                                     TaskManager<DDType, Config>& tm2) noexcept
             : ApplicationScheme<DDType, Config>(tm1, tm2),
@@ -22,7 +22,7 @@ namespace ec {
             return {gates1, gates2};
         }
 
-      private:
+    private:
         const std::size_t gates1;
         const std::size_t gates2;
     };

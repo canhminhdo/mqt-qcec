@@ -8,7 +8,7 @@
 #include "gtest/gtest.h"
 
 class SimulationTest : public ::testing::Test {
-  protected:
+protected:
     qc::QuantumComputation qcOriginal;
     qc::QuantumComputation qcAlternative;
     ec::Configuration      config{};

@@ -10,7 +10,7 @@
 #include <string>
 
 class CompilationFlowTest : public testing::TestWithParam<std::string> {
-  protected:
+protected:
     qc::QuantumComputation qcOriginal;
     qc::QuantumComputation qcTranspiled;
 

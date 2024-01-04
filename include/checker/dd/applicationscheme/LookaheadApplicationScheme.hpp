@@ -11,7 +11,7 @@ namespace ec {
     template <class Config>
     class LookaheadApplicationScheme final
         : public ApplicationScheme<qc::MatrixDD, Config> {
-      public:
+    public:
         LookaheadApplicationScheme(
             TaskManager<qc::MatrixDD, Config>& tm1,
             TaskManager<qc::MatrixDD, Config>& tm2) noexcept
@@ -75,7 +75,7 @@ namespace ec {
             return {0U, 0U};
         }
 
-      private:
+    private:
         qc::MatrixDD op1{};
         bool         cached1 = false;
 
