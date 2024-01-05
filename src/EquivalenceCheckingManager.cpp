@@ -344,6 +344,7 @@ void EquivalenceCheckingManager::checkSequential() {
         std::uint64_t maxStates = advancedSimulationChecker->getMaxStates();
         std::uint64_t initState = static_cast<std::uint64_t>(0U);
         while (initState < maxStates && !done) {
+            std::cout << "Progress: " << initState << "/" << maxStates << "\n";
             if (initState != 0) {
                 advancedSimulationChecker->setInitialState(stateGenerator,
                                                            initState);
