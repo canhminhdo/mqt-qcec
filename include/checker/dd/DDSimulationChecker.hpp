@@ -9,7 +9,7 @@
 #include "DDPackageConfigs.hpp"
 
 namespace ec {
-class DDSimulationChecker final
+class DDSimulationChecker
     : public DDEquivalenceChecker<qc::VectorDD, SimulationDDPackageConfig> {
 public:
     DDSimulationChecker(const qc::QuantumComputation& circ1,
@@ -33,7 +33,7 @@ public:
         j["checker"] = "decision_diagram_simulation";
     }
 
-private:
+protected:
     // the initial state used for simulation. defaults to the all-zero state
     // |0...0>
     qc::VectorDD initialState{};

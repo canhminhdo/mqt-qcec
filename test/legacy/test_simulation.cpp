@@ -14,10 +14,11 @@ protected:
     ec::Configuration      config{};
 
     void SetUp() override {
-        config.execution.runAlternatingChecker  = false;
-        config.execution.runConstructionChecker = false;
-        config.execution.runSimulationChecker   = true;
-        config.execution.parallel               = false;
+        config.execution.runAlternatingChecker        = false;
+        config.execution.runConstructionChecker       = false;
+        config.execution.runSimulationChecker         = false;
+        config.execution.runAdvancedSimulationChecker = true;
+        config.execution.parallel                     = false;
 
         config.simulation.maxSims        = 8U;
         config.simulation.storeCEXinput  = true;

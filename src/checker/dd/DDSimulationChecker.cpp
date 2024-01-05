@@ -18,6 +18,7 @@ void DDSimulationChecker::initializeTask(
     TaskManager<qc::VectorDD, SimulationDDPackageConfig>& taskManager) {
     taskManager.setInternalState(initialState);
     taskManager.incRef();
+    taskManager.resetIterator();
 }
 
 EquivalenceCriterion DDSimulationChecker::checkEquivalence() {

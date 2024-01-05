@@ -15,6 +15,7 @@ add_library(
         EquivalenceCheckingManager.cpp
         checker/EquivalenceChecker.cpp
         checker/dd/DDEquivalenceChecker.cpp
+        checker/dd/DDAdvancedSimulationChecker.cpp
         checker/dd/DDConstructionChecker.cpp
         checker/dd/DDSimulationChecker.cpp
         checker/dd/DDAlternatingChecker.cpp

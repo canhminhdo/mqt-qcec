@@ -10,6 +10,7 @@
 #include "EquivalenceCriterion.hpp"
 #include "QuantumComputation.hpp"
 #include "ThreadSafeQueue.hpp"
+#include "checker/dd/DDAdvancedSimulationChecker.hpp"
 #include "checker/dd/DDAlternatingChecker.hpp"
 #include "checker/dd/DDConstructionChecker.hpp"
 #include "checker/dd/DDSimulationChecker.hpp"

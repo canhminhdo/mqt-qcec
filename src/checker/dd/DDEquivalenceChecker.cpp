@@ -222,6 +222,21 @@ EquivalenceCriterion DDEquivalenceChecker<DDType, Config>::checkEquivalence() {
 }
 
 template <class DDType, class Config>
+bool DDEquivalenceChecker<DDType, Config>::checkSamePhase() {
+    if constexpr (std::is_same_v<DDType, qc::VectorDD>) {
+        // for vectors this is resolved by computing the inner product (or
+        // fidelity) between both decision diagrams and comparing it to some
+        // threshold
+        const auto innerProduct1 = dd->innerProduct(
+            taskManager1.getBaseState(), taskManager1.getInternalState());
+        const auto innerProduct2 = dd->innerProduct(
+            taskManager2.getBaseState(), taskManager2.getInternalState());
+        return innerProduct1.approximatelyEquals(innerProduct2);
+    }
+    return false;
+}
+
+template <class DDType, class Config>
 void DDEquivalenceChecker<DDType, Config>::initializeApplicationScheme(
     const ApplicationSchemeType scheme) {
     switch (scheme) {

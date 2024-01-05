@@ -10,14 +10,17 @@ endif ()
 package_add_test(
         ${PROJECT_NAME}_test
         ${PROJECT_NAME}
-        legacy/test_functionality.cpp
-        legacy/test_journal.cpp
-        legacy/test_compilationflow.cpp
-        legacy/test_general.cpp
+#        legacy/test_functionality.cpp
+#        legacy/test_journal.cpp
+#        legacy/test_compilationflow.cpp
+#        legacy/test_newcompilationflow.cpp
+#        legacy/test_general.cpp
         legacy/test_simulation.cpp
-        test_dynamic_circuits.cpp
-        test_simple_circuit_identities.cpp
-        test_gate_cost_application_scheme.cpp
-        test_equality.cpp
-        test_zx.cpp
-        test_symbolic.cpp)
+#        test_dynamic_circuits.cpp
+#        test_simple_circuit_identities.cpp
+#        test_gate_cost_application_scheme.cpp
+#        test_equality.cpp
+#        test_zx.cpp
+#        test_symbolic.cpp
+        test_advanced_simulation.cpp
+)

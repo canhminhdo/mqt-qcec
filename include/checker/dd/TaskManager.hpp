@@ -130,6 +130,12 @@ public:
     void decRef(DDType& state) { package->decRef(state); }
     void decRef() { decRef(internalState); }
 
+    void                        resetIterator() { iterator = qc->begin(); }
+    void                        setBaseState() { baseState = internalState; }
+    [[nodiscard]] const DDType& getBaseState() const noexcept {
+        return baseState;
+    }
+
 private:
     const qc::QuantumComputation* qc{};
     std::unique_ptr<DDPackage>&   package;
@@ -138,5 +144,6 @@ private:
     decltype(qc->begin())         iterator;
     decltype(qc->end())           end;
     DDType                        internalState{};
+    DDType                        baseState{};
 };
 } // namespace ec

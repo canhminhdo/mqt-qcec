@@ -41,6 +41,28 @@ public:
     }
 
     template <class DDPackage = dd::Package<>>
+    qc::VectorDD generateBasicState(std::unique_ptr<DDPackage>& dd,
+                                    const std::size_t           totalQubits,
+                                    const std::size_t ancillaryQubits = 0U,
+                                    std::uint64_t     state           = 0U) {
+        // determine how many qubits truly are random
+        const std::size_t nQubits = totalQubits - ancillaryQubits;
+        std::vector<bool> stimulusBits(totalQubits, false);
+
+        // check if the given state is valid
+        const auto maxStates = static_cast<std::uint64_t>(1U) << nQubits;
+        assert(state < maxStates);
+        // generate the bitvector corresponding to the given state
+        for (std::size_t i = 0U; i < nQubits; ++i) {
+            if ((state & (static_cast<std::uint64_t>(1U) << i)) != 0U) {
+                stimulusBits[i] = true;
+            }
+        }
+        // return the appropriate decision diagram
+        return dd->makeBasisState(totalQubits, stimulusBits);
+    }
+
+    template <class DDPackage = dd::Package<>>
     qc::VectorDD generateRandomComputationalBasisState(
         std::unique_ptr<DDPackage>& dd, const std::size_t totalQubits,
         const std::size_t ancillaryQubits = 0U) {

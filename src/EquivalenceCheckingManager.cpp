@@ -335,6 +335,80 @@ void EquivalenceCheckingManager::checkSequential() {
         }
     }
 
+    if (configuration.execution.runAdvancedSimulationChecker) {
+        checkers.emplace_back(std::make_unique<DDAdvancedSimulationChecker>(
+            qc1, qc2, configuration));
+        auto* const advancedSimulationChecker =
+            dynamic_cast<DDAdvancedSimulationChecker*>(checkers.back().get());
+
+        std::uint64_t maxStates = advancedSimulationChecker->getMaxStates();
+        std::uint64_t initState = static_cast<std::uint64_t>(0U);
+        while (initState < maxStates && !done) {
+            if (initState != 0) {
+                advancedSimulationChecker->setInitialState(stateGenerator,
+                                                           initState);
+            }
+
+            // run the simulation
+            ++results.startedSimulations;
+            const auto result = advancedSimulationChecker->run();
+            ++results.performedSimulations;
+
+            // if the run completed but has not yielded any information this
+            // indicates a timeout
+            if (result == EquivalenceCriterion::NoInformation) {
+                if (!done) {
+                    std::clog << "Simulation run returned without any "
+                                 "information. "
+                                 "Something probably went wrong. Exiting!\n";
+                }
+                return;
+            }
+
+            // break if non-equivalence has been shown
+            if (result == EquivalenceCriterion::NotEquivalent) {
+                results.equivalence = EquivalenceCriterion::NotEquivalent;
+                break;
+            } else {
+                // either EquivalenceCriterion::Equivalent or
+                // EquivalenceCriterion::EquivalentUpToPhase
+                results.equivalence = result;
+            }
+
+            if (initState == 0) {
+                advancedSimulationChecker->setBaseState1();
+                advancedSimulationChecker->setBaseState2();
+            } else {
+                // check two-column vectors share the same global phase if they
+                // are equivalent up to a phase.
+                if (results.equivalence ==
+                        EquivalenceCriterion::EquivalentUpToPhase &&
+                    !advancedSimulationChecker->checkSamePhase()) {
+                    results.equivalence = EquivalenceCriterion::NotEquivalent;
+                    break;
+                }
+            }
+            initState++;
+        }
+        // Circuits have been shown to be non-equivalent
+        if (results.equivalence == EquivalenceCriterion::NotEquivalent) {
+            if (configuration.simulation.storeCEXinput) {
+                results.cexInput =
+                    advancedSimulationChecker->getInitialVector();
+            }
+            if (configuration.simulation.storeCEXoutput) {
+                results.cexOutput1 =
+                    advancedSimulationChecker->getInternalVector1();
+                results.cexOutput2 =
+                    advancedSimulationChecker->getInternalVector2();
+            }
+        }
+
+        // everything is done
+        done = true;
+        doneCond.notify_one();
+    }
+
     if (configuration.execution.runAlternatingChecker && !done) {
         checkers.emplace_back(
             std::make_unique<DDAlternatingChecker>(qc1, qc2, configuration));

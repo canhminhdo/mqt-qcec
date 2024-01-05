@@ -26,10 +26,11 @@ public:
             std::max(2U, std::thread::hardware_concurrency());
         double timeout = 0.; // in seconds
 
-        bool runConstructionChecker = false;
-        bool runSimulationChecker   = true;
-        bool runAlternatingChecker  = true;
-        bool runZXChecker           = true;
+        bool runConstructionChecker       = false;
+        bool runSimulationChecker         = true;
+        bool runAdvancedSimulationChecker = true;
+        bool runAlternatingChecker        = true;
+        bool runZXChecker                 = true;
     };
 
     // configuration options for pre-check optimizations
@@ -100,7 +101,8 @@ public:
     Parameterized parameterized{};
 
     [[nodiscard]] bool anythingToExecute() const noexcept {
-        return (execution.runSimulationChecker && simulation.maxSims > 0U) ||
+        return execution.runAdvancedSimulationChecker ||
+               (execution.runSimulationChecker && simulation.maxSims > 0U) ||
                execution.runAlternatingChecker ||
                execution.runConstructionChecker || execution.runZXChecker;
     }
