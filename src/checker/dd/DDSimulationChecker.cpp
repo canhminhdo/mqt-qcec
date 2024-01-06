@@ -16,9 +16,9 @@ DDSimulationChecker::DDSimulationChecker(const qc::QuantumComputation& circ1,
 
 void DDSimulationChecker::initializeTask(
     TaskManager<qc::VectorDD, SimulationDDPackageConfig>& taskManager) {
+    DDEquivalenceChecker::initializeTask(taskManager);
     taskManager.setInternalState(initialState);
     taskManager.incRef();
-    taskManager.resetTaskManager();
 }
 
 EquivalenceCriterion DDSimulationChecker::checkEquivalence() {

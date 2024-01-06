@@ -130,10 +130,11 @@ public:
     void decRef(DDType& state) { package->decRef(state); }
     void decRef() { decRef(internalState); }
 
-    void resetTaskManager() {
+    void reset() noexcept {
         iterator    = qc->begin();
         permutation = qc->initialLayout;
     }
+
     void                        setBaseState() { baseState = internalState; }
     [[nodiscard]] const DDType& getBaseState() const noexcept {
         return baseState;

@@ -53,7 +53,7 @@ protected:
     EquivalenceCriterion equals(const DDType& e, const DDType& f);
     bool                 checkSamePhase();
 
-    virtual void initializeTask(TaskManager<DDType, Config>& taskManager) = 0;
+    virtual void initializeTask(TaskManager<DDType, Config>& taskManager);
     virtual void initialize();
     virtual void execute();
     virtual void finish();
